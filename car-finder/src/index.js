@@ -21,9 +21,10 @@ class VehicleData {
     
     
         getYears(){
+            console.log('Raw data:', this.data);
              const years = this.data.map(item => {
                 if (!item) return null;
-                const yr = item.year ?? item.Year;
+                const yr = item.year ?? item.Year ?? item.YEAR;
                 return yr ? yr.toString() : null;
              });
 
@@ -39,10 +40,10 @@ class VehicleData {
             const makes = this.data
                 .filter(item =>{
                     if (!item) return false;
-                    const itemYear = item.year ?? item.Year;
+                    const itemYear = item.year ?? item.Year ?? item.YEAR;
                     return itemYear && itemYear.toString() === year.toString();
                 })
-                .map(item => item.make)
+                .map(item => item.Manufacturer ?? item.manufacturer)
 
             return [...new Set(makes)].filter(Boolean).sort();
         }
@@ -54,13 +55,13 @@ class VehicleData {
             const models = this.data
                 .filter(item => {
                     if (!item) return false;
-                    const itemYear = item.year ?? item.Year;
-                    const itemMake = item.make ?? item.Make;
+                    const itemYear = item.year ?? item.Year ?? item.YEAR;
+                    const itemMake = item.Manufacturer ?? item.manufacturer;
                     return itemYear && itemMake && 
-                           itemYear.toString() === year && 
+                           itemYear.toString() === year.toString() && 
                            itemMake.toString().toLowerCase() === make.toLowerCase();
                 })
-                .map(item => item.model)
+                .map(item => item.model ?? item.Model ?? item.MODEL)
                 .filter(model => model && model !== 'default');
 
             return [...new Set(models)].filter(Boolean).sort(); 
@@ -104,6 +105,15 @@ class VehicleController {
             const selectedMake = this.makeSelect.value;
             this.populateModels(selectedYear, selectedMake);
         });
+
+        this.modelSelect.addEventListener('change', () => {
+            const selectedYear = this.yearSelect.value;
+            const selectedMake = this.makeSelect.value;
+            const selectedModel = this.modelSelect.value;
+            console.log(`Selected Vehicle: ${selectedYear} ${selectedMake} ${selectedModel}`);
+        });
+
+        
     }
         populateMakes(year){
             const makes = this.dataLoader.getMakes(year);
