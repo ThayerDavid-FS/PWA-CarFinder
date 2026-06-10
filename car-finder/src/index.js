@@ -21,32 +21,52 @@ class VehicleData {
     
     
         getYears(){
-             const years = this.data.map(item => item && item.year ? item.year.toString() : null);
-            return [...new Set(years)]
-            .filter(year => year && year !== 'default')
-            .sort((a, b) => b - a);
-           
-        }
+             const years = this.data.map(item => {
+                if (!item) return null;
+                const yr = item.year ?? item.Year;
+                return yr ? yr.toString() : null;
+             });
+
+             return [...new Set(years)]
+             .filter(year => year && year !== 'default')
+             .sort((a, b) => b - a);
+             }
+        
         
         getMakes(year){
-            console.log(`Getting makes for year: ${year}`);
+            if (!year) return [];
 
             const makes = this.data
-                .filter(item => item.year && item.year.toString() === year)
-                .map(item => item.make);
-            return [...new Set(makes)].sort();
+                .filter(item =>{
+                    if (!item) return false;
+                    const itemYear = item.year ?? item.Year;
+                    return itemYear && itemYear.toString() === year.toString();
+                })
+                .map(item => item.make)
+
+            return [...new Set(makes)].filter(Boolean).sort();
         }
         
-        getModels(year, make){
+        
+        getModels(year, make) {
+            if (!year || !make) return [];
+
             const models = this.data
-                .filter(item => item.year && item.year.toString() === year && item.make === make)
+                .filter(item => {
+                    if (!item) return false;
+                    const itemYear = item.year ?? item.Year;
+                    const itemMake = item.make ?? item.Make;
+                    return itemYear && itemMake && 
+                           itemYear.toString() === year && 
+                           itemMake.toString().toLowerCase() === make.toLowerCase();
+                })
                 .map(item => item.model)
                 .filter(model => model && model !== 'default');
-            return [...new Set(models)].sort();
-        }
 
+            return [...new Set(models)].filter(Boolean).sort(); 
+        
 }
-
+}
 class VehicleController {
     constructor(dataLoader){
         this.dataLoader = dataLoader;
