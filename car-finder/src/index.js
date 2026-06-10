@@ -21,7 +21,7 @@ class VehicleData {
     
     
         getYears(){
-            console.log('Raw data:', this.data);
+            // console.log('Raw data:', this.data);
              const years = this.data.map(item => {
                 if (!item) return null;
                 const yr = item.year ?? item.Year ?? item.YEAR;
@@ -67,6 +67,23 @@ class VehicleData {
             return [...new Set(models)].filter(Boolean).sort(); 
         
 }
+        getVehicleData(year, make, model) {
+            if (!year || !make || !model) return null;
+
+            const matchingRecord = this.data.find(item => {
+                if (!item) return false;
+                const itemYear = item.year ?? item.Year ?? item.YEAR;
+                const itemMake = item.Manufacturer ?? item.manufacturer;
+                const itemModel = item.model ?? item.Model ?? item.MODEL;
+
+                return itemYear && itemMake && itemModel &&
+                       itemYear.toString() === year.toString() &&
+                       itemMake.toString().toLowerCase() === make.toLowerCase() &&
+                       itemModel.toString().toLowerCase() === model.toLowerCase();
+            });
+
+            return matchingRecord || null;
+        }
 }
 class VehicleController {
     constructor(dataLoader){
@@ -74,6 +91,10 @@ class VehicleController {
         this.yearSelect = document.getElementById('yearSelect');
         this.makeSelect = document.getElementById('makeSelect');
         this.modelSelect = document.getElementById('modelSelect');
+
+        this.yearHeading = document.getElementById('yearHeading');
+        this.makeHeading = document.getElementById('makeHeading');
+        this.modelHeading = document.getElementById('modelHeading');
     }
 
      init(){
@@ -110,7 +131,13 @@ class VehicleController {
             const selectedYear = this.yearSelect.value;
             const selectedMake = this.makeSelect.value;
             const selectedModel = this.modelSelect.value;
-            console.log(`Selected Vehicle: ${selectedYear} ${selectedMake} ${selectedModel}`);
+           
+            if (selectedYear && selectedMake && selectedModel) {
+                const matchingRecord = this.dataLoader.getVehicleData(selectedYear, selectedMake, selectedModel);
+                console.log('Selected Vehicle:', matchingRecord);
+                }
+            
+
         });
 
         

@@ -7,29 +7,32 @@
 </head>
 <body>
   <section class="hero">
-    <div></div>
+    <div class="container">
       <header>
-        <h1>Find Your Dream Vehicle</h1>
-        <p>Have you been dreaming about getting a new vehicle? <br>Look no further!</p>
+        <h1 class="title">Find Your Dream Vehicle</h1>
+        <p class="subtitle">Have you been dreaming about getting a new vehicle? <br>Look no further!</p>
       </header>
 
-      <form class="vehicle-search" id="vehicleForm">
-        <div class="form-group">
-          <label for="yearSelect">Year</label>
-          <select name="year" id="yearSelect">
+      <form class="search-box" id="vehicleForm">
+        
+        <div class="columns">
+          <h2 class="heading" id="yearHeading">Year</h2>
+          <div>          
+          <select name="year" id="yearSelect" class="selected">
             <option value="">Select Year</option>
           </select>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="makeSelect">Make</label>
+        <div class="columns">
+          <h2 class="heading" id="makeHeading">Make</h2>
           <select name="make" id="makeSelect" disabled>
             <option value="">Select Make</option>
           </select>
         </div>
 
-        <div class="form-group">
-          <label for="modelSelect">Model</label>
+        <div class="columns">
+          <h2 class="heading" id="modelHeading">Model</h2>
           <select name="model" id="modelSelect" disabled>
             <option value="">Select Model</option>
           </select>

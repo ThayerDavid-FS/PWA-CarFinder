@@ -1,3 +1,134 @@
 html {
   background: gray;
 }
+$color-primary-header: #ffffff;
+$color-subtext: #d3d3d3;
+$color-form-panel-bg: #f2f2f2;
+$color-form-blue: #348fbc;
+$color-form-disabled: #909090;
+$color-selected-option: #212121;
+
+.hero{
+  position: relative;
+  height: 100vh;
+  padding: 4rem 2rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(../car-finder-bg.jpg);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+
+  .container{
+    max-width: 1200px;
+    margin: 0 auto;
+    color: $color-primary-header;
+
+    h1{
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    p{
+      font-size: 1.25rem;
+      color: $color-subtext;
+    }
+
+    
+  }
+
+  .title {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      color: $color-primary-header;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: $color-subtext;
+      font-weight: 500;
+      line-height: 1.5;
+      margin-bottom: 3rem;
+      max-width: 500px;
+    } 
+}
+
+.search-box {
+  background: $color-form-panel-bg;
+  border-radius: 12px;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 2rem;
+  }
+
+  .columns {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: relative;
+
+    &:not(:last-child) {
+      border-right: 1px solid rgba(0, 0, 0, 0.08);
+      border-right: 2rem;
+
+
+      @media (max-width: 768px) {
+        border-right: none;
+        padding-right: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        padding-bottom: 1.5rem;
+      }
+    }
+  }
+
+.heading {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: $color-primary-header;
+  margin: 0;
+
+  &.active {
+    color: $color-form-blue;
+  }
+}
+
+select {
+  width: 100%;
+  border: 1px solid $color-form-disabled;
+  border-radius: 6px;
+  padding: 0.9rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: $color-selected-option;
+  background-color: transparent;
+  cursor: pointer;
+  appearance: none;
+  outline: none;
+  transition: all 0.2s ease;
+
+  &:focus {
+    border-color: $color-form-blue;
+    box-shadow: 0 0 0 2px rgba($color-form-blue, 0.2);
+  }
+
+  &.selected-option {
+    color: $color-selected-option;
+  }
+
+  &:disabled {
+    background-color: $color-form-disabled;
+    cursor: not-allowed;
+    color: #fff;
+  }
+}
+}
+
